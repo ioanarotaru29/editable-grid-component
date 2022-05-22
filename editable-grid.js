@@ -24,6 +24,10 @@ export class EditableGrid extends LitElement {
     }
 
     firstUpdated() {
+        this.addEventListener("setSource", event => this.sourceIndex = event.detail.index)
+        this.addEventListener("setTarget", event => this.targetIndex = event.detail.index)
+        this.addEventListener("setCompleted", () => console.log(this.targetIndex))
+
         this.gridItems.map((item, index) => {
             item.index = index
             item.originalIndex = index
