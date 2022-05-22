@@ -4,7 +4,8 @@
   "description": "Framework Design - Editable List Web Component",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "serve": "web-dev-server --node-resolve --watch --open"
   },
   "repository": {
     "type": "git",
@@ -15,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/ioanarotaru29/fd-web-component/issues"
   },
-  "homepage": "https://github.com/ioanarotaru29/fd-web-component#readme"
+  "homepage": "https://github.com/ioanarotaru29/fd-web-component#readme",
+  "dependencies": {
+    "@web/dev-server": "^0.1.31",
+    "lit": "^2.2.4"
+  }
 }
