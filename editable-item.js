@@ -24,17 +24,14 @@ export class EditableItem extends LitElement {
     }
 
     dragstart() {
-        console.log('start dragging')
         this.trigger("setSource", {index: this.index})
     }
 
     dragover(event) {
-        console.log('dragged over')
         this.trigger("setTarget", {index: event.target.index})
     }
 
     dragend() {
-        console.log('dragged end')
         this.trigger("setCompleted")
     }
 
