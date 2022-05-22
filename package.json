@@ -1,0 +1,19 @@
+{
+  "name": "editable-grid-component",
+  "version": "1.0.0",
+  "description": "Framework Design - Editable List Web Component",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ioanarotaru29/fd-web-component.git"
+  },
+  "author": "ioanarotaru29",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ioanarotaru29/fd-web-component/issues"
+  },
+  "homepage": "https://github.com/ioanarotaru29/fd-web-component#readme"
+}
