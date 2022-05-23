@@ -16,7 +16,60 @@ export class EditableGrid extends LitElement {
             globalStyle,
             css`
             ::slotted(*) {
-                padding:10px;
+                padding:5px;
+                marring: 5px;
+            }
+            .switch {
+              position: relative;
+              display: inline-block;
+              margin-left: 2.5rem;
+              height: 1.5rem;
+            } 
+            .switch input { 
+              opacity: 0;
+              width: 0;
+              height: 0;
+            }
+            .slider {
+              position: absolute;
+              cursor: pointer;
+              top: 0;
+              left: 0;
+              right: 0;
+              bottom: 0;
+              width: 2.5rem;
+              margin-left: -2.5rem;
+              background-color: #ccc;
+              -webkit-transition: .4s;
+              transition: .4s;
+            }
+            .slider:before {
+              position: absolute;
+              content: "";
+              height: 1rem;
+              width: 1rem;
+              left: 4px;
+              bottom: 4px;
+              background-color: white;
+              -webkit-transition: .4s;
+              transition: .4s;
+            }
+            input:checked + .slider {
+              background-color: steelblue;
+            }
+            input:focus + .slider {
+              box-shadow: 0 0 1px steelblue;
+            }
+            input:checked + .slider:before {
+              -webkit-transform: translateX(1rem);
+              -ms-transform: translateX(1rem);
+              transform: translateX(1rem);
+            }
+            .slider.round {
+              border-radius: 1.5rem;
+            }
+            .slider.round:before {
+              border-radius: 50%;
             }
       `
         ];
@@ -24,6 +77,10 @@ export class EditableGrid extends LitElement {
 
     get gridItems() {
         return [...this.querySelectorAll("editable-item")]
+    }
+
+    get sortableSwitch() {
+        return this.renderRoot.querySelector("#sortableSwitch")
     }
 
     sort() {
@@ -64,6 +121,7 @@ export class EditableGrid extends LitElement {
             this.gridItems.map((item, i) =>
                 item.currentIndex = i)
         })
+        this.sortableSwitch.addEventListener("change", event => this.gridItems.map(item => item.dragEnable = event.target.checked))
 
         this.gridItems.map((item, index) => {
             item.index = index
@@ -76,6 +134,20 @@ export class EditableGrid extends LitElement {
     render() {
         return html`
             <div class="container-fluid">
+                <div class="row m-2">
+                    <label class="switch">
+                      <input type="checkbox" id="sortableSwitch">
+                      <span class="slider round"></span>
+                      Sortable
+                    </label>
+                </div>
+                <div class="row m-2">    
+                    <label class="switch">
+                      <input type="checkbox" id="resizableSwitch">
+                      <span class="slider round"></span>
+                      Resizable
+                    </label>
+                </div>
                 <div class="row">
                     <slot></slot>
                 </div>                

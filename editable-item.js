@@ -1,4 +1,4 @@
-import {LitElement, html} from "lit";
+import {LitElement, html, css} from "lit";
 
 export class EditableItem extends LitElement {
     static get properties() {
@@ -6,13 +6,38 @@ export class EditableItem extends LitElement {
             index: {type: Number},
             originalIndex: {type: Number},
             currentIndex: {type: Number},
+            dragEnable: {type: Boolean}
         }
     }
 
+    static get styles() {
+        const { cssRules } = document.styleSheets[0]
+        const globalStyle = css([Object.values(cssRules).map(rule =>
+            rule.cssText).join('\n')])
+        return [
+            globalStyle,
+            css`
+            :host(*) {
+                display: flex;
+                align-items: stretch;
+            }
+      `
+        ];
+    }
+
+    constructor() {
+        super();
+        this.dragEnable = false;
+    }
+
     firstUpdated() {
-        this.setAttribute('draggable', 'true')
-        const events = ['dragstart', 'dragover', 'dragend']
+        this.classList.add('col-lg-4')
+        const events = ['dragstart', 'dragover', 'dragend', 'sortableChanged']
         events.map(e => this.addEventListener(e, ev => this[e](ev), false))
+    }
+
+    updated() {
+        this.setAttribute('draggable', this.dragEnable)
     }
 
     trigger(event, detail) {
