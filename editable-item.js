@@ -28,7 +28,9 @@ export class EditableItem extends LitElement {
     }
 
     dragover(event) {
-        this.trigger("setTarget", {index: event.target.index})
+        const index = event.target.closest("editable-item").index
+        if(index !== undefined)
+            this.trigger("setTarget", {index: index})
     }
 
     dragend() {

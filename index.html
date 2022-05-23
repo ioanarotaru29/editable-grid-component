@@ -7,16 +7,131 @@
     <script type="module" src="editable-item.js"></script>
 
     <title>Editable Grid Component Demo</title>
+    <style>
+        .card{
+            margin-top: 10px;
+        }
+        .card-body {
+            position: relative;
+        }
+        .card-number {
+            position: absolute;
+            background-color: steelblue;
+            top: -20px;
+            left: 10px;
+            height: 40px;
+            width: 40px;
+            text-align: center;
+            color: white;
+            border-radius: 50%;
+            border: 1px solid rgba(0,0,0,.125);
+            display: flex;
+            align-content: center;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+    </style>
 </head>
 <body>
     <h2 class="mb-2"><small>Editable List/Grid View</small></h2>
     <editable-grid>
-        <editable-item class="col-lg-3">A</editable-item>
-        <editable-item class="col-lg-3">B</editable-item>
-        <editable-item class="col-lg-3">C</editable-item>
-        <editable-item class="col-lg-3">D</editable-item>
-        <editable-item class="col-lg-3">E</editable-item>
-        <editable-item class="col-lg-3">F</editable-item>
+        <editable-item class="col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-number"><h4>1</h4></div>
+                    <div class="card-text">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Curabitur rutrum ex et vehicula convallis.
+                        Praesent pretium urna sit amet mi ornare aliquam.
+                        Duis fringilla rhoncus ipsum egestas dapibus.
+                    </div>
+                </div>
+            </div>
+        </editable-item>
+
+        <editable-item class="col-lg-4">
+            <div class="card">
+                <div class="card-number"><h4>2</h4></div>
+                <div class="card-body">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Curabitur rutrum ex et vehicula convallis.
+                    Praesent pretium urna sit amet mi ornare aliquam.
+                    Duis fringilla rhoncus ipsum egestas dapibus.
+                </div>
+            </div>
+        </editable-item>
+
+        <editable-item class="col-lg-4">
+            <div class="card">
+                <div class="card-number"><h4>3</h4></div>
+                <div class="card-body">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Curabitur rutrum ex et vehicula convallis.
+                    Praesent pretium urna sit amet mi ornare aliquam.
+                    Duis fringilla rhoncus ipsum egestas dapibus.
+                </div>
+            </div>
+        </editable-item>
+
+        <editable-item class="col-lg-4">
+            <div class="card">
+                <div class="card-number"><h4>4</h4></div>
+                <div class="card-body">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Curabitur rutrum ex et vehicula convallis.
+                    Praesent pretium urna sit amet mi ornare aliquam.
+                    Duis fringilla rhoncus ipsum egestas dapibus.
+                </div>
+            </div>
+        </editable-item>
+
+        <editable-item class="col-lg-4">
+            <div class="card">
+                <div class="card-number"><h4>5</h4></div>
+                <div class="card-body">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Curabitur rutrum ex et vehicula convallis.
+                    Praesent pretium urna sit amet mi ornare aliquam.
+                    Duis fringilla rhoncus ipsum egestas dapibus.
+                </div>
+            </div>
+        </editable-item>
+
+        <editable-item class="col-lg-4">
+            <div class="card">
+                <div class="card-number"><h4>6</h4></div>
+                <div class="card-body">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Curabitur rutrum ex et vehicula convallis.
+                    Praesent pretium urna sit amet mi ornare aliquam.
+                    Duis fringilla rhoncus ipsum egestas dapibus.
+                </div>
+            </div>
+        </editable-item>
+
+        <editable-item class="col-lg-4">
+            <div class="card">
+                <div class="card-number"><h4>7</h4></div>
+                <div class="card-body">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Curabitur rutrum ex et vehicula convallis.
+                    Praesent pretium urna sit amet mi ornare aliquam.
+                    Duis fringilla rhoncus ipsum egestas dapibus.
+                </div>
+            </div>
+        </editable-item>
+
+        <editable-item class="col-lg-4">
+            <div class="card">
+                <div class="card-number"><h4>8</h4></div>
+                <div class="card-body">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Curabitur rutrum ex et vehicula convallis.
+                    Praesent pretium urna sit amet mi ornare aliquam.
+                </div>
+            </div>
+        </editable-item>
+
     </editable-grid>
 </body>
 </html>

@@ -16,7 +16,7 @@ export class EditableGrid extends LitElement {
             globalStyle,
             css`
             ::slotted(*) {
-                height: 300px;
+                padding:10px;
             }
       `
         ];
