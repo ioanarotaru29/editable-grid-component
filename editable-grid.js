@@ -92,6 +92,10 @@ export class EditableGrid extends LitElement {
         return this.renderRoot.querySelector("#sortableSwitch")
     }
 
+    get resizableSwitch() {
+        return this.renderRoot.querySelector("#resizableSwitch")
+    }
+
     sort() {
         // const minIndex = Math.min(this.sourceIndex, this.targetIndex)
         // const maxIndex = Math.max(this.sourceIndex, this.targetIndex)
@@ -141,6 +145,9 @@ export class EditableGrid extends LitElement {
         })
         if(this.sortable)
             this.sortableSwitch.addEventListener("change", event => this.gridItems.map(item => item.dragEnable = event.target.checked))
+
+        if(this.resizable)
+            this.resizableSwitch.addEventListener("change", event => this.gridItems.map(item => item.resizeEnable = event.target.checked))
 
         this.gridItems.map((item, index) => {
             item.index = index

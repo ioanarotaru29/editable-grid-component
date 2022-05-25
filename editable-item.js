@@ -7,7 +7,8 @@ export class EditableItem extends LitElement {
             originalIndex: {type: Number},
             currentIndex: {type: Number},
             sourceIndex: {type: Number},
-            dragEnable: {type: Boolean}
+            dragEnable: {type: Boolean},
+            resizeEnable: {type: Boolean}
         }
     }
 
@@ -21,9 +22,23 @@ export class EditableItem extends LitElement {
             :host(*) {
                 display: flex;
                 align-items: stretch;
+                user-select: none;
             }
             :host(.drag-highlight) {
                 box-shadow: 0px 0px 10px 2px #ccc;
+            }
+            .resize-drag {
+                padding: 0 5px;
+                color: #ccc;
+                visibility: hidden;
+            }
+            
+            :host([resizable=true]) .resize-drag {
+                visibility: visible;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                cursor: e-resize;
             }
       `
         ];
@@ -32,6 +47,11 @@ export class EditableItem extends LitElement {
     constructor() {
         super();
         this.dragEnable = false;
+        this.resizeEnable = false;
+    }
+
+    get resizeHandle() {
+        this.renderRoot.querySelector(".resize-drag")
     }
 
     firstUpdated() {
@@ -41,11 +61,12 @@ export class EditableItem extends LitElement {
     }
 
     updated() {
-        if(this.sourceIndex === this.currentIndex)
+        if (this.sourceIndex === this.currentIndex)
             this.classList.add('drag-highlight')
         else
             this.classList.remove('drag-highlight')
         this.setAttribute('draggable', this.dragEnable)
+        this.setAttribute('resizable', this.resizeEnable)
     }
 
     trigger(event, detail) {
@@ -54,6 +75,12 @@ export class EditableItem extends LitElement {
             bubbles: true,
             composed: true
         }))
+    }
+
+    initResize(event) {
+        console.log(this.getBoundingClientRect().left)
+        console.log(this.getBoundingClientRect().width)
+        console.log(event.clientX)
     }
 
     dragstart() {
@@ -73,6 +100,9 @@ export class EditableItem extends LitElement {
     render() {
         return html `
             <slot></slot>
+            <div class="resize-drag" @mousedown="${event => this.initResize(event)}">
+                ||
+            </div>
         `;
     }
 }
