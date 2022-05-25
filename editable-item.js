@@ -6,6 +6,7 @@ export class EditableItem extends LitElement {
             index: {type: Number},
             originalIndex: {type: Number},
             currentIndex: {type: Number},
+            sourceIndex: {type: Number},
             dragEnable: {type: Boolean}
         }
     }
@@ -20,6 +21,9 @@ export class EditableItem extends LitElement {
             :host(*) {
                 display: flex;
                 align-items: stretch;
+            }
+            :host(.drag-highlight) {
+                box-shadow: 0px 0px 10px 2px #ccc;
             }
       `
         ];
@@ -37,6 +41,10 @@ export class EditableItem extends LitElement {
     }
 
     updated() {
+        if(this.sourceIndex === this.currentIndex)
+            this.classList.add('drag-highlight')
+        else
+            this.classList.remove('drag-highlight')
         this.setAttribute('draggable', this.dragEnable)
     }
 

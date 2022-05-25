@@ -4,9 +4,18 @@ export class EditableGrid extends LitElement {
     static get properties () {
         return {
             sourceIndex: {type: Number},
-            targetIndex: {type: Number}
+            targetIndex: {type: Number},
+            sortable: {type: Boolean},
+            resizable: {type: Boolean}
         }
     }
+
+    constructor() {
+        super();
+        this.sortable=false
+        this.rezisable=false
+    }
+
 
     static get styles() {
         const { cssRules } = document.styleSheets[0]
@@ -112,16 +121,26 @@ export class EditableGrid extends LitElement {
     }
 
     firstUpdated() {
-        this.addEventListener("setSource", event => this.sourceIndex = event.detail.index)
+        this.addEventListener("setSource", event => {
+            this.sourceIndex = event.detail.index
+            this.gridItems.map(item => {
+                item.sourceIndex = event.detail.index
+            })
+        })
         this.addEventListener("setTarget", event => {
             this.targetIndex = event.detail.index
             this.sort()
         })
         this.addEventListener("setCompleted", () => {
             this.gridItems.map((item, i) =>
-                item.currentIndex = i)
+            {
+                item.currentIndex = i
+                item.sourceIndex = null
+            }
+            )
         })
-        this.sortableSwitch.addEventListener("change", event => this.gridItems.map(item => item.dragEnable = event.target.checked))
+        if(this.sortable)
+            this.sortableSwitch.addEventListener("change", event => this.gridItems.map(item => item.dragEnable = event.target.checked))
 
         this.gridItems.map((item, index) => {
             item.index = index
@@ -134,20 +153,28 @@ export class EditableGrid extends LitElement {
     render() {
         return html`
             <div class="container-fluid">
-                <div class="row m-2">
-                    <label class="switch">
-                      <input type="checkbox" id="sortableSwitch">
-                      <span class="slider round"></span>
-                      Sortable
-                    </label>
-                </div>
-                <div class="row m-2">    
-                    <label class="switch">
-                      <input type="checkbox" id="resizableSwitch">
-                      <span class="slider round"></span>
-                      Resizable
-                    </label>
-                </div>
+                ${ this.sortable ? 
+                    html`
+                    <div class="row m-2">
+                        <label class="switch">
+                          <input type="checkbox" id="sortableSwitch">
+                          <span class="slider round"></span>
+                          Allow item sorting
+                        </label>
+                    </div>`
+                    : ''
+                }
+                ${this.resizable ?
+                    html`
+                    <div class="row m-2">    
+                        <label class="switch">
+                          <input type="checkbox" id="resizableSwitch">
+                          <span class="slider round"></span>
+                          Allow item resizing
+                        </label>
+                    </div>`
+                    : ''
+                }
                 <div class="row">
                     <slot></slot>
                 </div>                
