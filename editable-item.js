@@ -8,7 +8,12 @@ export class EditableItem extends LitElement {
             currentIndex: {type: Number},
             sourceIndex: {type: Number},
             dragEnable: {type: Boolean},
-            resizeEnable: {type: Boolean}
+
+            resizeEnable: {type: Boolean},
+            isResizing: {type: Boolean},
+            initialX: {type: Number},
+            initialWidth: {type: Number},
+            currentWidth: {type: Number}
         }
     }
 
@@ -48,16 +53,27 @@ export class EditableItem extends LitElement {
         super();
         this.dragEnable = false;
         this.resizeEnable = false;
+        this.isResizing = false;
     }
 
     get resizeHandle() {
-        this.renderRoot.querySelector(".resize-drag")
+        return this.renderRoot.querySelector(".resize-drag")
     }
 
     firstUpdated() {
         this.classList.add('col-lg-4')
         const events = ['dragstart', 'dragover', 'dragend', 'sortableChanged']
         events.map(e => this.addEventListener(e, ev => this[e](ev), false))
+
+        const resizeEvents = [
+            {event: "mousedown", handler: "initResize"},
+            {event: "mousemove", handler: "doResize"},
+            {event: "mouseup", handler: "stopResize"}
+        ]
+        resizeEvents.map(e => {
+            this[e.handler] = this[e.handler].bind(this);
+            this.resizeHandle.addEventListener(e.event, ev => this[e.handler](ev), false)
+        })
     }
 
     updated() {
@@ -78,9 +94,29 @@ export class EditableItem extends LitElement {
     }
 
     initResize(event) {
-        console.log(this.getBoundingClientRect().left)
-        console.log(this.getBoundingClientRect().width)
-        console.log(event.clientX)
+        this.isResizing = true
+        this.initialX = event.clientX
+        this.initialWidth = this.currentWidth = this.getBoundingClientRect().width
+    }
+
+    doResize(event) {
+        if(this.isResizing) {
+            this.currentWidth = this.initialWidth + (event.clientX - this.initialX)
+            this.style.minWidth = this.currentWidth + "px"
+            this.style.maxWidth = this.currentWidth + "px"
+        }
+    }
+
+    stopResize(event) {
+        this.isResizing = false
+        this.initialX = null
+        this.initialWidth = null
+
+        const containerWidth = this.parentElement.getBoundingClientRect().width
+        const colWidth = containerWidth / 12
+        this.style.removeProperty("max-width")
+        this.style.removeProperty("min-width")
+        this.className = this.className.replace(/col-lg-\d/, `col-lg-${Math.round(this.currentWidth/colWidth)}`)
     }
 
     dragstart() {
@@ -100,7 +136,7 @@ export class EditableItem extends LitElement {
     render() {
         return html `
             <slot></slot>
-            <div class="resize-drag" @mousedown="${event => this.initResize(event)}">
+            <div class="resize-drag">
                 ||
             </div>
         `;
