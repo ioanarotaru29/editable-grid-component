@@ -72,7 +72,9 @@ export class EditableItem extends LitElement {
         ]
         resizeEvents.map(e => {
             this[e.handler] = this[e.handler].bind(this);
-            this.resizeHandle.addEventListener(e.event, ev => this[e.handler](ev), false)
+            e.event === "mousemove" ?
+                window.addEventListener(e.event, ev => this[e.handler](ev), false)
+                : this.resizeHandle.addEventListener(e.event, ev => this[e.handler](ev), false)
         })
     }
 
@@ -101,7 +103,13 @@ export class EditableItem extends LitElement {
 
     doResize(event) {
         if(this.isResizing) {
-            this.currentWidth = this.initialWidth + (event.clientX - this.initialX)
+            const currentWidth = this.initialWidth + (event.clientX - this.initialX)
+            const containerWidth = this.parentElement.getBoundingClientRect().width
+            const colWidth = containerWidth / 12
+            if(Math.abs(Math.round(currentWidth/colWidth)*colWidth - currentWidth) < 25)
+                this.currentWidth = Math.round(currentWidth/colWidth)*colWidth
+            else
+                this.currentWidth = currentWidth
             this.style.minWidth = this.currentWidth + "px"
             this.style.maxWidth = this.currentWidth + "px"
         }
