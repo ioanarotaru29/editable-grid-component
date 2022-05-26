@@ -144,10 +144,22 @@ export class EditableGrid extends LitElement {
             )
         })
         if(this.sortable)
-            this.sortableSwitch.addEventListener("change", event => this.gridItems.map(item => item.dragEnable = event.target.checked))
+            this.sortableSwitch.addEventListener("change", event => {
+                this.resizableSwitch.checked = false
+                this.gridItems.map(item => {
+                    item.dragEnable = event.target.checked
+                    item.resizeEnable = false
+                })
+            })
 
         if(this.resizable)
-            this.resizableSwitch.addEventListener("change", event => this.gridItems.map(item => item.resizeEnable = event.target.checked))
+            this.resizableSwitch.addEventListener("change", event => {
+                this.sortableSwitch.checked = false
+                this.gridItems.map(item => {
+                    item.resizeEnable = event.target.checked
+                    item.dragEnable = false
+                })
+            })
 
         this.gridItems.map((item, index) => {
             item.index = index
